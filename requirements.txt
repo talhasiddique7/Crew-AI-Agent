@@ -1,0 +1,15 @@
+# Core dependencies
+streamlit
+groq
+python-dotenv
+validators
+crewai
+
+# FastAPI and related
+fastapi[all]
+uvicorn[standard]
+pydantic>=2.0.0
+
+# Additional utilities
+python-multipart
+httpx
