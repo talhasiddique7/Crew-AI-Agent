@@ -1,112 +1,55 @@
 """
-Academic Service for handling academic questions and chat
+Simple Academic Service without CrewAI dependencies
 """
-
-import logging
-from typing import Dict, Any, List
-from ..agents.academic_agent import AcademicAgent
-
-logger = logging.getLogger(__name__)
+import os
+from groq import Groq
+from ..config import Config
 
 class AcademicService:
-    """Service for academic chat and question answering"""
-    
     def __init__(self):
-        """Initialize the academic service"""
-        self.agent = AcademicAgent()
-        logger.info("Academic Service initialized")
-    
-    def chat(self, message: str, subject: str = "General") -> Dict[str, Any]:
+        """Initialize the service with Groq client."""
+        self.config = Config()
+        self.client = Groq(api_key=self.config.GROQ_API_KEY)
+        
+    async def process_question(self, question: str, subject: str = "General") -> str:
         """
-        Handle academic chat messages
+        Process academic question using Groq API directly.
         
         Args:
-            message: User's message/question
-            subject: Subject area
+            question: The academic question to answer
+            subject: The subject area (optional)
             
         Returns:
-            Response dictionary
+            The AI response as a string
         """
         try:
-            logger.info(f"Processing chat request - Subject: {subject}, Message: {message[:100]}...")
+            # Create a comprehensive prompt for academic assistance
+            system_prompt = f"""You are an expert academic assistant specializing in {subject}. 
+            Provide comprehensive, educational, and well-structured answers to academic questions.
             
-            # Use the academic agent to answer the question
-            result = self.agent.answer_question(message, subject)
+            Guidelines:
+            - Give detailed explanations with clear reasoning
+            - Include relevant examples when helpful
+            - Break down complex concepts into understandable parts
+            - Use proper academic tone and terminology
+            - Cite concepts or principles when relevant
+            - If the question is unclear, ask for clarification
             
-            logger.info(f"Agent response - Success: {result['success']}")
+            Subject Focus: {subject}"""
             
-            if result["success"]:
-                return {
-                    "success": True,
-                    "message": result["answer"],
-                    "metadata": {
-                        "subject": subject,
-                        "agent": "Academic Assistant",
-                        "timestamp": self._get_timestamp()
-                    }
-                }
-            else:
-                logger.error(f"Agent error: {result.get('error', 'Unknown error')}")
-                return {
-                    "success": False,
-                    "message": "I apologize, but I encountered an error processing your question. Please try again.",
-                    "error": result.get("error", "Unknown error")
-                }
-                
-        except Exception as e:
-            logger.error(f"Error in academic chat: {e}")
-            return {
-                "success": False,
-                "message": "I'm experiencing technical difficulties. Please try again later.",
-                "error": str(e)
-            }
-    
-    def get_subjects(self) -> List[str]:
-        """Get list of supported academic subjects"""
-        return [
-            "General",
-            "Mathematics",
-            "Physics",
-            "Chemistry",
-            "Biology",
-            "Computer Science",
-            "History",
-            "Literature",
-            "Philosophy",
-            "Psychology",
-            "Economics",
-            "Geography",
-            "Political Science",
-            "Sociology",
-            "Anthropology",
-            "Environmental Science",
-            "Engineering",
-            "Medicine",
-            "Law",
-            "Education"
-        ]
-    
-    def health_check(self) -> Dict[str, Any]:
-        """Check service health"""
-        try:
-            # Test the LLM connection
-            test_result = self.agent.llm.test_connection()
+            # Make API call to Groq
+            response = self.client.chat.completions.create(
+                model=self.config.GROQ_MODEL,
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": question}
+                ],
+                temperature=0.7,
+                max_tokens=2000,
+                top_p=0.9
+            )
             
-            return {
-                "service": "Academic Service",
-                "status": "healthy" if test_result["success"] else "unhealthy",
-                "llm_connection": test_result,
-                "agent_status": "initialized"
-            }
+            return response.choices[0].message.content
             
         except Exception as e:
-            return {
-                "service": "Academic Service",
-                "status": "unhealthy",
-                "error": str(e)
-            }
-    
-    def _get_timestamp(self) -> str:
-        """Get current timestamp"""
-        from datetime import datetime
-        return datetime.utcnow().isoformat() + "Z"
+            raise Exception(f"Error processing question: {str(e)}")

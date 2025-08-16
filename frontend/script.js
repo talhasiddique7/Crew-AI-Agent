@@ -164,10 +164,11 @@ async function handleChatSubmit(e) {
 // Send Chat Message to Backend
 async function sendChatMessage(message) {
     const requestData = {
-        message: message,
-        subject: subjectSelect.value,
-        context: getRecentContext()
+        question: message,  
+        subject: subjectSelect.value
     };
+    
+    console.log("Sending request data:", requestData);
     
     const response = await fetch(`${API_BASE_URL}/api/v1/academic/chat`, {
         method: 'POST',

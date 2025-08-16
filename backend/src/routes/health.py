@@ -10,6 +10,16 @@ logger = logging.getLogger(__name__)
 router = APIRouter()
 
 @router.get("/")
+async def health_check_root():
+    """Basic health check at root"""
+    return {
+        "status": "healthy",
+        "service": "Academic Chat Agent API",
+        "timestamp": datetime.utcnow().isoformat() + "Z",
+        "version": "1.0.0"
+    }
+
+@router.get("/health")
 async def health_check():
     """Basic health check"""
     return {

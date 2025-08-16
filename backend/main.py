@@ -19,7 +19,7 @@ import time
 project_root = Path(__file__).parent
 sys.path.insert(0, str(project_root))
 
-from src.routes import simple_academic, health
+from src.routes import academic, health
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -87,29 +87,29 @@ async def general_exception_handler(request, exc):
 # Include routers
 app.include_router(health.router, prefix="/api/v1", tags=["Health"])
 # app.include_router(youtube.router, prefix="/api/v1", tags=["YouTube"])  # Not available in backend
-app.include_router(simple_academic.router, prefix="/api/v1/academic", tags=["Academic"])
+app.include_router(academic.router, prefix="/api/v1/academic", tags=["Academic"])
 
 # Mount static files for frontend
-app.mount("/static", StaticFiles(directory="../frontend_new"), name="static")
+app.mount("/static", StaticFiles(directory="../frontend"), name="static")
 
 # Root endpoint - serve the homepage dashboard
 @app.get("/")
 async def root():
-    return FileResponse("../frontend_new/home.html")
+    return FileResponse("../frontend/home.html")
 
 # Academic agent endpoint
 @app.get("/academic")
 async def academic_app():
-    return FileResponse("../frontend_new/academic.html")
+    return FileResponse("../frontend/academic.html")
 
-# Legacy styles and scripts from frontend_new
+# Legacy styles and scripts from frontend
 @app.get("/styles.css")
 async def styles():
-    return FileResponse("../frontend_new/styles.css")
+    return FileResponse("../frontend/styles.css")
 
 @app.get("/script.js")
 async def script():
-    return FileResponse("../frontend_new/script.js")
+    return FileResponse("../frontend/script.js")
 
 # API info endpoint
 @app.get("/api")

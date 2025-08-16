@@ -1,75 +1,78 @@
 """
-Academic API routes
+Academic API routes without CrewAI dependencies
 """
-
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-from typing import Optional, List
 import logging
-
 from ..services.academic_service import AcademicService
 
+# Configure logging
 logger = logging.getLogger(__name__)
+
+# Create router
 router = APIRouter()
 
 # Initialize service
 academic_service = AcademicService()
 
-class ChatRequest(BaseModel):
-    """Request model for academic chat"""
-    message: str
-    subject: Optional[str] = "General"
+# Request/Response models
+class AcademicQuestionRequest(BaseModel):
+    question: str
+    subject: str = "General"
 
-class ChatResponse(BaseModel):
-    """Response model for academic chat"""
-    success: bool
+class AcademicResponse(BaseModel):
     message: str
-    metadata: Optional[dict] = None
-    error: Optional[str] = None
+    subject: str
 
-@router.post("/chat", response_model=ChatResponse)
-async def academic_chat(request: ChatRequest):
+@router.post("/chat", response_model=AcademicResponse)
+async def academic_chat(request: AcademicQuestionRequest):
     """
-    Academic chat endpoint
-    
-    Send a message to the academic assistant and get a response.
+    Process academic question and return AI response.
     """
     try:
-        if not request.message.strip():
-            raise HTTPException(status_code=400, detail="Message cannot be empty")
+        print("here"),  # Debugging line
+        logger.info(f"Processing academic question: {request.question[:50]}...")
         
-        result = academic_service.chat(request.message, request.subject)
+        # Process the question
+        response = await academic_service.process_question(
+            question=request.question,
+            subject=request.subject
+        )
         
-        return ChatResponse(
-            success=result["success"],
-            message=result["message"],
-            metadata=result.get("metadata"),
-            error=result.get("error")
+        logger.info("Academic question processed successfully")
+        
+        return AcademicResponse(
+            message=response,
+            subject=request.subject
         )
         
     except Exception as e:
-        logger.error(f"Error in academic chat endpoint: {e}")
-        raise HTTPException(status_code=500, detail="Internal server error")
+        logger.error(f"Error processing academic question: {str(e)}")
+        raise HTTPException(
+            status_code=500,
+            detail=f"Error processing question: {str(e)}"
+        )
 
 @router.get("/subjects")
 async def get_subjects():
-    """Get list of supported academic subjects"""
-    try:
-        subjects = academic_service.get_subjects()
-        return {
-            "subjects": subjects,
-            "total": len(subjects)
-        }
-    except Exception as e:
-        logger.error(f"Error getting subjects: {e}")
-        raise HTTPException(status_code=500, detail="Internal server error")
-
-@router.get("/health")
-async def academic_health():
-    """Health check for academic service"""
-    try:
-        health = academic_service.health_check()
-        return health
-    except Exception as e:
-        logger.error(f"Error in academic health check: {e}")
-        raise HTTPException(status_code=500, detail="Internal server error")
+    """
+    Get available academic subjects.
+    """
+    subjects = [
+        "General",
+        "Mathematics", 
+        "Physics",
+        "Chemistry",
+        "Biology",
+        "Computer Science",
+        "History",
+        "Literature",
+        "Economics",
+        "Philosophy",
+        "Psychology",
+        "Engineering",
+        "Medicine",
+        "Law"
+    ]
+    
+    return {"subjects": subjects}
