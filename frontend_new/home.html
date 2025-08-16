@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CrewAI Agents Dashboard</title>
+    <link rel="stylesheet" href="/static/home.css?v=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="main-header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <i class="fas fa-robot"></i>
+                    <div class="logo-text">
+                        <h1>CrewAI Agents</h1>
+                        <p>AI-Powered Assistant Dashboard</p>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <div class="status-indicator">
+                        <div class="status-dot active"></div>
+                        <span>All Systems Online</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <h2>Choose Your AI Assistant</h2>
+                <p>Explore our collection of specialized AI agents designed to help you with various tasks</p>
+            </div>
+        </section>
+
+        <!-- Agents Grid -->
+        <main class="agents-grid">
+            <!-- Academic Chat Agent -->
+            <div class="agent-card featured" onclick="openAgent('academic')">
+                <div class="agent-header">
+                    <div class="agent-icon academic">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="agent-status">
+                        <span class="status-badge active">Active</span>
+                    </div>
+                </div>
+                <div class="agent-content">
+                    <h3>Academic Research Assistant</h3>
+                    <p>Get comprehensive answers to academic questions across multiple disciplines including science, mathematics, literature, and history.</p>
+                    <div class="agent-features">
+                        <span class="feature-tag"><i class="fas fa-book"></i> Multi-disciplinary</span>
+                        <span class="feature-tag"><i class="fas fa-brain"></i> AI-Powered</span>
+                        <span class="feature-tag"><i class="fas fa-chart-line"></i> Research-focused</span>
+                    </div>
+                </div>
+                <div class="agent-footer">
+                    <button class="launch-btn">
+                        <i class="fas fa-rocket"></i>
+                        Launch Assistant
+                    </button>
+                </div>
+            </div>
+
+            <!-- YouTube Agent (Coming Soon) -->
+            <div class="agent-card coming-soon" onclick="showComingSoon('youtube')">
+                <div class="agent-header">
+                    <div class="agent-icon youtube">
+                        <i class="fab fa-youtube"></i>
+                    </div>
+                    <div class="agent-status">
+                        <span class="status-badge coming-soon">Coming Soon</span>
+                    </div>
+                </div>
+                <div class="agent-content">
+                    <h3>YouTube Content Assistant</h3>
+                    <p>Analyze YouTube videos, generate summaries, create scripts, and optimize content for better engagement and reach.</p>
+                    <div class="agent-features">
+                        <span class="feature-tag"><i class="fas fa-video"></i> Video Analysis</span>
+                        <span class="feature-tag"><i class="fas fa-edit"></i> Script Writing</span>
+                        <span class="feature-tag"><i class="fas fa-chart-bar"></i> SEO Optimization</span>
+                    </div>
+                </div>
+                <div class="agent-footer">
+                    <button class="launch-btn disabled">
+                        <i class="fas fa-clock"></i>
+                        Coming Soon
+                    </button>
+                </div>
+            </div>
+
+            <!-- Code Assistant (Coming Soon) -->
+            <div class="agent-card coming-soon" onclick="showComingSoon('code')">
+                <div class="agent-header">
+                    <div class="agent-icon code">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div class="agent-status">
+                        <span class="status-badge coming-soon">Coming Soon</span>
+                    </div>
+                </div>
+                <div class="agent-content">
+                    <h3>Code Development Assistant</h3>
+                    <p>Get help with programming tasks, code reviews, debugging, and software architecture recommendations.</p>
+                    <div class="agent-features">
+                        <span class="feature-tag"><i class="fas fa-bug"></i> Debugging</span>
+                        <span class="feature-tag"><i class="fas fa-code-branch"></i> Code Review</span>
+                        <span class="feature-tag"><i class="fas fa-puzzle-piece"></i> Architecture</span>
+                    </div>
+                </div>
+                <div class="agent-footer">
+                    <button class="launch-btn disabled">
+                        <i class="fas fa-clock"></i>
+                        Coming Soon
+                    </button>
+                </div>
+            </div>
+
+            <!-- Business Assistant (Coming Soon) -->
+            <div class="agent-card coming-soon" onclick="showComingSoon('business')">
+                <div class="agent-header">
+                    <div class="agent-icon business">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <div class="agent-status">
+                        <span class="status-badge coming-soon">Coming Soon</span>
+                    </div>
+                </div>
+                <div class="agent-content">
+                    <h3>Business Strategy Assistant</h3>
+                    <p>Analyze market trends, create business plans, and get strategic recommendations for your business growth.</p>
+                    <div class="agent-features">
+                        <span class="feature-tag"><i class="fas fa-chart-pie"></i> Market Analysis</span>
+                        <span class="feature-tag"><i class="fas fa-lightbulb"></i> Strategy</span>
+                        <span class="feature-tag"><i class="fas fa-rocket"></i> Growth Plans</span>
+                    </div>
+                </div>
+                <div class="agent-footer">
+                    <button class="launch-btn disabled">
+                        <i class="fas fa-clock"></i>
+                        Coming Soon
+                    </button>
+                </div>
+            </div>
+
+            <!-- Data Analysis Assistant (Coming Soon) -->
+            <div class="agent-card coming-soon" onclick="showComingSoon('data')">
+                <div class="agent-header">
+                    <div class="agent-icon data">
+                        <i class="fas fa-chart-area"></i>
+                    </div>
+                    <div class="agent-status">
+                        <span class="status-badge coming-soon">Coming Soon</span>
+                    </div>
+                </div>
+                <div class="agent-content">
+                    <h3>Data Analysis Assistant</h3>
+                    <p>Analyze datasets, create visualizations, and generate insights from your data with AI-powered analytics.</p>
+                    <div class="agent-features">
+                        <span class="feature-tag"><i class="fas fa-database"></i> Data Processing</span>
+                        <span class="feature-tag"><i class="fas fa-chart-line"></i> Visualization</span>
+                        <span class="feature-tag"><i class="fas fa-search"></i> Insights</span>
+                    </div>
+                </div>
+                <div class="agent-footer">
+                    <button class="launch-btn disabled">
+                        <i class="fas fa-clock"></i>
+                        Coming Soon
+                    </button>
+                </div>
+            </div>
+
+            <!-- Create Your Own Agent -->
+            <div class="agent-card create-new" onclick="showCreateAgent()">
+                <div class="agent-header">
+                    <div class="agent-icon create">
+                        <i class="fas fa-plus"></i>
+                    </div>
+                </div>
+                <div class="agent-content">
+                    <h3>Create Your Own Agent</h3>
+                    <p>Build a custom AI assistant tailored to your specific needs and requirements.</p>
+                    <div class="agent-features">
+                        <span class="feature-tag"><i class="fas fa-cogs"></i> Customizable</span>
+                        <span class="feature-tag"><i class="fas fa-magic"></i> AI-Powered</span>
+                        <span class="feature-tag"><i class="fas fa-infinity"></i> Unlimited</span>
+                    </div>
+                </div>
+                <div class="agent-footer">
+                    <button class="launch-btn create">
+                        <i class="fas fa-plus"></i>
+                        Create Agent
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="main-footer">
+            <div class="footer-content">
+                <p>&copy; 2025 CrewAI Agents Dashboard. Powered by CrewAI & Groq.</p>
+                <div class="footer-links">
+                    <a href="/docs">API Documentation</a>
+                    <a href="https://github.com/talhasiddique7/Crew-AI-Agent" target="_blank">GitHub</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Coming Soon Modal -->
+    <div class="modal" id="comingSoonModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-clock"></i> Coming Soon</h3>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>This agent is currently under development and will be available soon!</p>
+                <p>Stay tuned for updates.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/home.js?v=1.0"></script>
+</body>
+</html>

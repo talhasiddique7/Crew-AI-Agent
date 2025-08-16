@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Chat Agent</title>
+    <link rel="stylesheet" href="/static/styles.css?v=1.1">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h1>Academic Chat Agent</h1>
+                </div>
+                <div class="status-indicator">
+                    <div class="status-dot" id="statusDot"></div>
+                    <span id="statusText">Connecting...</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Subject Selection -->
+            <div class="subject-panel">
+                <label for="subjectSelect" class="subject-label">
+                    <i class="fas fa-book"></i>
+                    Subject Area
+                </label>
+                <select id="subjectSelect" class="subject-select">
+                    <option value="General">General</option>
+                    <!-- Options will be loaded dynamically -->
+                </select>
+            </div>
+
+            <!-- Chat Container -->
+            <div class="chat-container">
+                <!-- Messages Area -->
+                <div class="messages-area" id="messagesArea">
+                    <div class="welcome-message">
+                        <div class="welcome-content">
+                            <i class="fas fa-robot welcome-icon"></i>
+                            <h2>Welcome to Academic Chat Agent</h2>
+                            <p>I'm your AI-powered academic assistant. Ask me questions about any subject, and I'll provide comprehensive, educational answers.</p>
+                            <div class="example-questions">
+                                <h3>Example questions:</h3>
+                                <ul>
+                                    <li>"Explain the concept of photosynthesis"</li>
+                                    <li>"What is the significance of the French Revolution?"</li>
+                                    <li>"How does machine learning work?"</li>
+                                    <li>"Explain quantum mechanics in simple terms"</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Input Area -->
+                <div class="input-area">
+                    <form id="chatForm" class="chat-form">
+                        <div class="input-container">
+                            <textarea 
+                                id="messageInput" 
+                                class="message-input" 
+                                placeholder="Ask your academic question here..."
+                                rows="1"
+                                maxlength="2000"
+                            ></textarea>
+                            <button type="submit" class="send-button" id="sendButton">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                        <div class="input-footer">
+                            <span class="char-counter" id="charCounter">0/2000</span>
+                            <span class="hint">Press Enter to send, Shift+Enter for new line</span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+
+        <!-- Loading Overlay -->
+        <div class="loading-overlay" id="loadingOverlay">
+            <div class="loading-content">
+                <div class="spinner"></div>
+                <p>Thinking...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
